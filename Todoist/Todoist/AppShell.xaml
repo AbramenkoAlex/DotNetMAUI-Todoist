@@ -9,6 +9,6 @@
 
     <ShellContent
         ContentTemplate="{DataTemplate pages:AuthorizationPage}"
-        Route="AuthorizationPage" />
+        Route="authorization" />
 
 </Shell>
