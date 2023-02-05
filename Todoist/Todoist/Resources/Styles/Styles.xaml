@@ -18,6 +18,9 @@
 
     <Style TargetType="Button" x:Key="EmailAuthorizationButton" BasedOn="{StaticResource AuthorizationButton}">
         <Setter Property="BackgroundColor" Value="{StaticResource LightRed}" />
+    </Style>
+
+    <Style TargetType="Button" x:Key="EmailAuthorizationButtonWithImage" BasedOn="{StaticResource EmailAuthorizationButton}">
         <Setter Property="ImageSource" Value="mail_btn_icon.png" />
     </Style>
 
@@ -43,6 +46,20 @@
     <Style TargetType="Label" x:Key="PolicyLabel" BasedOn="{StaticResource DefaultLabel}">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightGrey}, Dark={StaticResource White}}" />
         <Setter Property="FontSize" Value="12" />
-    </Style>    
+    </Style>
+
+    <Style TargetType="Label" x:Key="AuthorizationFormHeader" BasedOn="{StaticResource DefaultLabel}">
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <!-- Entry styles -->
+    <Style x:Key="InvalidEntry" TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource Red}" />
+    </Style>
     
+    <Style x:Key="ValidEntry" TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource Green}" />
+    </Style>
+
 </ResourceDictionary>

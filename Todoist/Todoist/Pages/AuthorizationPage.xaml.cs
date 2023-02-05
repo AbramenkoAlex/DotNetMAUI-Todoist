@@ -1,30 +1,27 @@
 using CommunityToolkit.Maui.Views;
-using Todoist.Constants;
+using System.Windows.Input;
 using Todoist.Views;
 
 namespace Todoist.Pages;
 
 public partial class AuthorizationPage : ContentPage
 {
-    private readonly IDeviceDisplay _deviceDisplay;
+    public ICommand HyperlinkLabelTapGestureCommand => new Command<string>(ShowWebViewPopup);
 
-    public AuthorizationPage(IDeviceDisplay deviceDisplay)
+    public AuthorizationPage()
 	{
         BindingContext = this;
         InitializeComponent();
-
-        _deviceDisplay = deviceDisplay;
-
-        TermsOfServiceLabel.Url = RawResourcesConstants.TermsOfServicePage;
-        TermsOfServiceLabel.TapGestureCommand = new Command<string>(ShowWebViewPopup);
-
-        PrivacyPolicyLabel.Url = UrlConstants.PrivacyPolicy;
-        PrivacyPolicyLabel.TapGestureCommand = new Command<string>(ShowWebViewPopup);
     }
 
     private void ShowWebViewPopup(string url)
     {
-        var popup = new WebViewPopup(url, _deviceDisplay);
+        var popup = new WebViewPopup(url);
         this.ShowPopup(popup);
+    }
+
+    private async void OnContinueWithEmailClick(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("email", true);
     }
 }

@@ -5,10 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Todoist"
     xmlns:pages="clr-namespace:Todoist.Pages"
+    xmlns:constants="clr-namespace:Todoist.Constants"
     Shell.FlyoutBehavior="Disabled">
 
     <ShellContent
         ContentTemplate="{DataTemplate pages:AuthorizationPage}"
-        Route="authorization" />
+        Route="{Static constants:ShellNavigationConstants.MainAuthorizationPage}"/>
+
+    <ShellContent
+        ContentTemplate="{DataTemplate pages:EmailAuthorizationPage}"/>
 
 </Shell>

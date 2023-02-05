@@ -20,8 +20,6 @@ public static class MauiProgram
         builder.Logging.AddDebug();
         #endif
 
-        builder.Services.AddSingleton(DeviceDisplay.Current);
-
         return builder.Build();
     }
 }
