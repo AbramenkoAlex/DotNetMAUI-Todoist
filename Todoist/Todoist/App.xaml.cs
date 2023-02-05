@@ -1,13 +1,28 @@
-﻿using Todoist.Pages;
-
-namespace Todoist;
+﻿namespace Todoist;
 
 public partial class App : Application
 {
-	public App(IDeviceDisplay deviceDisplay)
+    public new static App Current => (App)Application.Current;
+
+    public IServiceProvider Services { get; }
+
+
+    public App()
 	{
+        Services = ConfigureServices();
+
 		InitializeComponent();
 
-		MainPage = new AuthorizationPage(deviceDisplay);
-	}
+		MainPage = new AppShell();
+    }
+
+
+    private static IServiceProvider ConfigureServices()
+    {
+        var services = new ServiceCollection();
+
+        services.AddSingleton(DeviceDisplay.Current);
+
+        return services.BuildServiceProvider();
+    }
 }

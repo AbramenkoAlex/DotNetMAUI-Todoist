@@ -2,8 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Todoist.Pages.AuthorizationPage"
              xmlns:controls="clr-namespace:Todoist.Controls"
+             xmlns:constants="clr-namespace:Todoist.Constants"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
 
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False" />
+    </Shell.BackButtonBehavior>    
+    
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Primary}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
@@ -32,8 +37,9 @@
         <Image Grid.Row="1" Source="motivation_image.png" />
 
         <VerticalStackLayout Grid.Row="2" >
-            <Button Text="Continue with Email" 
-                    Style="{StaticResource EmailAuthorizationButton}" 
+            <Button Text="Continue with Email"
+                    Clicked="OnContinueWithEmailClick"
+                    Style="{StaticResource EmailAuthorizationButtonWithImage}" 
                     Margin="0,0,0,15"/>
             
             <Button Text="Continue with Apple" 
@@ -49,7 +55,9 @@
                        Style="{StaticResource PolicyLabel}"/>
 
                 <controls:HyperlinkLabel x:Name="TermsOfServiceLabel" 
-                                         Text="Terms of Service" 
+                                         Text="Terms of Service"
+                                         Url="{Static constants:RawResourcesConstants.TermsOfServicePage}"
+                                         TapGestureCommand="{Binding HyperlinkLabelTapGestureCommand}"
                                          Style="{StaticResource PolicyLabel}"/>                
             </HorizontalStackLayout>
             
@@ -60,6 +68,8 @@
 
                 <controls:HyperlinkLabel x:Name="PrivacyPolicyLabel" 
                                          Text="Privacy Policy" 
+                                         Url="{Static constants:UrlConstants.PrivacyPolicy}"
+                                         TapGestureCommand="{Binding HyperlinkLabelTapGestureCommand}"
                                          Style="{StaticResource PolicyLabel}"/>
             </HorizontalStackLayout>
         </Grid>

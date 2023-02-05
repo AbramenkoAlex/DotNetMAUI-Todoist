@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:converters="clr-namespace:Todoist.Converters">
+
+    <converters:InverterConverter x:Key="InverterConverter" />
+    <converters:AllTrueConverter x:Key="AllTrueConverter" />
+    
+    <ControlTemplate x:Key="EmailAuthorizationFormTemplate">
+        <Grid RowDefinitions="*,8*,20*"
+              Padding="20, 0, 20, 20" 
+              RowSpacing="10"
+              BackgroundColor="{StaticResource Primary}"
+              IsEnabled="{TemplateBinding IsSubmitted, Converter={StaticResource InverterConverter}}">
+
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{TemplateBinding TapCommand}"></TapGestureRecognizer>
+            </Grid.GestureRecognizers>
+
+            <ActivityIndicator Grid.RowSpan="3" 
+                               IsRunning="true" 
+                               IsVisible="{TemplateBinding IsSubmitted}"
+                               ZIndex="1"/>
+
+            <Button Grid.Row="0" 
+                    Text="Close" 
+                    IsEnabled="{TemplateBinding IsSubmitted, Converter={StaticResource InverterConverter}}" 
+                    Command="{TemplateBinding CloseCommand}"  
+                    TextColor="Red"
+                    BackgroundColor="Transparent" 
+                    FontSize="14" 
+                    HorizontalOptions="Start" 
+                    Padding="0">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Opacity" Value="1" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="Opacity" Value="0.5" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Button>
+
+            <Label Grid.Row="1" 
+                   Text="What's your email address?" 
+                   Style="{StaticResource AuthorizationFormHeader}"/>
+
+            <VerticalStackLayout Grid.Row="2">
+                <Label Text="YOUR EMAIL"
+                       Style="{StaticResource DefaultLabel}"/>
+
+                    <Entry Text="{TemplateBinding Email}"
+                           Placeholder="Email"
+                           Keyboard="Email"
+                           ReturnType="Done"
+                           IsEnabled="{TemplateBinding IsSubmitted, Converter={StaticResource InverterConverter}}"
+                           IsSpellCheckEnabled="false"
+                           Margin="0,5">
+                    
+                        <Entry.Behaviors>
+                            <toolkit:EmailValidationBehavior x:Name="EmailValidator"
+                                                             InvalidStyle="{StaticResource InvalidEntry}"
+                                                             ValidStyle="{StaticResource ValidEntry}"
+                                                             Flags="ValidateOnValueChanged"
+                                                             MinimumLength="5"
+                                                             MaximumLength="255"/>
+                        </Entry.Behaviors>
+                    </Entry>
+
+                <Button Text="Continue with email" 
+                        Style="{StaticResource EmailAuthorizationButton}"
+                        Command="{TemplateBinding SubmitCommand}" >
+                    
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity" Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{StaticResource AllTrueConverter}" 
+                                      FallbackValue="false" 
+                                      TargetNullValue="false">
+                            
+                            <Binding Source="{x:Reference EmailValidator}" 
+                                     Path="IsValid"/>
+                            
+                            <Binding Source="{x:RelativeSource Mode=TemplatedParent}" 
+                                     Path="IsSubmitted" 
+                                     Converter="{StaticResource InverterConverter}"/>
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+            </VerticalStackLayout>
+        </Grid>
+    </ControlTemplate>
+</ResourceDictionary>

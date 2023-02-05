@@ -1,4 +1,3 @@
-using Android.Content.Res;
 using CommunityToolkit.Maui.Views;
 
 namespace Todoist.Views;
@@ -10,8 +9,10 @@ public partial class WebViewPopup : Popup
 
 	public string UrlOrResourceName { get; set; }
 
-	public WebViewPopup(string urlOrResourceName, IDeviceDisplay deviceDisplay)
+	public WebViewPopup(string urlOrResourceName)
 	{
+        var deviceDisplay = App.Current.Services.GetService<IDeviceDisplay>();
+
         UrlOrResourceName = urlOrResourceName;
         Size = new(
             PopupWidthMultiplier * (deviceDisplay.MainDisplayInfo.Width / deviceDisplay.MainDisplayInfo.Density),
