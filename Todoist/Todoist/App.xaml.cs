@@ -1,11 +1,13 @@
-﻿namespace Todoist;
+﻿using Todoist.Pages;
+
+namespace Todoist;
 
 public partial class App : Application
 {
-	public App()
+	public App(IDeviceDisplay deviceDisplay)
 	{
 		InitializeComponent();
 
-		MainPage = new AppShell();
+		MainPage = new AuthorizationPage(deviceDisplay);
 	}
 }

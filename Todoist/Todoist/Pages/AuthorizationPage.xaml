@@ -1,35 +1,68 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Todoist.Pages.AuthorizationPage"
+             xmlns:controls="clr-namespace:Todoist.Controls"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
-    
+
     <ContentPage.Behaviors>
-        <toolkit:StatusBarBehavior StatusBarColor="#fcf8c7" StatusBarStyle="DarkContent" />
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Primary}" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
 
-    <VerticalStackLayout Padding="30" BackgroundColor="#fcf8c7">
-        <HorizontalStackLayout Margin="0,0,0,60" HorizontalOptions="Center">
-            <Frame CornerRadius="50" WidthRequest="40" HeightRequest="40">
-                <Image Source="todoist_icon.png" WidthRequest="40" HeightRequest="40"/>
+    <Grid RowDefinitions="10*,65*,25*,10*"
+          ColumnDefinitions="*" 
+          Padding="20" 
+          RowSpacing="30"
+          BackgroundColor="{StaticResource Primary}">
+
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center">
+            <Frame CornerRadius="50" 
+                   WidthRequest="40" 
+                   HeightRequest="40">
+                
+                <Image Source="todoist_icon.png" 
+                       WidthRequest="40" 
+                       HeightRequest="40"/>
             </Frame>
-            <Label Text="ODOist" FontSize="22" FontFamily="OpenSansSemibold" FontAttributes="Italic" VerticalTextAlignment="Center" TextColor="Black"/>
+            
+            <Label Text="ODOist" 
+                   VerticalTextAlignment="Center" 
+                   Style="{StaticResource LogoLabel}"/>
         </HorizontalStackLayout>
 
-        <Image Source="motivation_image.png" Margin="0,0,0,80"/>
-        
-        <Button Text="Continue with Email" ImageSource="mail_btn_icon.png" Margin="0,0,0,20" FontSize="16" BackgroundColor="#CA3737"/>
-        <Button Text="Continue with Apple" ImageSource="apple_btn_icon.png" Margin="0,0,0,100" FontSize="16" BackgroundColor="Black"/>
-        
-        <Label HorizontalTextAlignment="Center">
-            <Label.FormattedText>
-                <FormattedString>
-                    <Span Text="By continuing you agree to Todoist's "/>
-                    <Span Text="Terms of Service " TextDecorations="Underline"/>
-                    <Span Text="and "/>
-                    <Span Text="Privacy Policy" TextDecorations="Underline"/>
-                </FormattedString>
-            </Label.FormattedText>
-        </Label>
-    </VerticalStackLayout>
+        <Image Grid.Row="1" Source="motivation_image.png" />
+
+        <VerticalStackLayout Grid.Row="2" >
+            <Button Text="Continue with Email" 
+                    Style="{StaticResource EmailAuthorizationButton}" 
+                    Margin="0,0,0,15"/>
+            
+            <Button Text="Continue with Apple" 
+                    Style="{StaticResource AppleAuthorizationButton}"/>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="3" 
+              RowDefinitions="*,3*"
+              RowSpacing="0">
+            
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label Text="By continuing you agree to Todoist's " 
+                       Style="{StaticResource PolicyLabel}"/>
+
+                <controls:HyperlinkLabel x:Name="TermsOfServiceLabel" 
+                                         Text="Terms of Service" 
+                                         Style="{StaticResource PolicyLabel}"/>                
+            </HorizontalStackLayout>
+            
+            <HorizontalStackLayout Grid.Row="1" 
+                                   HorizontalOptions="Center">
+                <Label Text=" and " 
+                       Style="{StaticResource PolicyLabel}"/>
+
+                <controls:HyperlinkLabel x:Name="PrivacyPolicyLabel" 
+                                         Text="Privacy Policy" 
+                                         Style="{StaticResource PolicyLabel}"/>
+            </HorizontalStackLayout>
+        </Grid>
+
+    </Grid>
 </ContentPage>
